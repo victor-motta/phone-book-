@@ -1,7 +1,7 @@
 def menu():
-    voltarMenuPrincipal = 's'
-    while voltarMenuPrincipal == 's':
-        opcao = input('''
+    ReturnMainMenu = 's'
+    while ReturnMainMenu == 's':
+        option = input('''
         ==========================================================
                             Contact List Project
         menu:
@@ -10,49 +10,49 @@ def menu():
         [2]LIST CONTACT
         [3]DELETE CONTACT
         [4]SEARCH CONTACT BY NAME
-        [5]SAIR
+        [5]EXIT
         ===========================================================
-        ESCOLHA UMA OPCÇÃO ACIMA: 
+        SELECT ONE OPTION: 
         ''')
-        if opcao == "1":
+        if option == "1":
             registerContact()
-        elif opcao == "2":
+        elif option == "2":
             listContact()
-        elif opcao == "3":
+        elif option == "3":
             deleteContact()
-        elif opcao == "4":
+        elif option == "4":
             searchContactByname()
         else:
-            sair()
-        voltarMenuPrincipal = input(
-            "Deseja voltar ao menu principal (s/n)").lower()
+            exit()
+        ReturnMainMenu = input(
+            "return to main menu (s/n)").lower()
 
 
 def registerContact():
-    idcontact = input("escolha o id do seu contato: ")
-    name = input("Escreva o nome do contato: ")
-    telefone = input("Escreva o telefone do contato: ")
-    email = input("Escreva o email do contact: ")
+    idcontact = input("select your contact id: ")
+    name = input("Write the contact name: ")
+    telefone = input("enter the phone number of the contact: ")
+    email = input("Write the email of the contact: ")
     try:
         agenda = open("agenda.txt", "a")
         dados = f'{idcontact};{name};{telefone};{email} \n'
         agenda.write(dados)
         agenda.close()
-        print(f'Contato gravado com Sucesso')
+        print(f'Successfully recorded contact')
     except:
-        print("ERROR na gravação do contato")
+        print("ERROR when saving the contact")
 
 
 def listContact():
     agenda = open("agenda.txt", "r")
-    for contato in agenda:
-        print(contato)
+    for contact in agenda:
+        print(contact)
         agenda.close
 
 
 def deleteContact():
 
-    nomedeletado = input("Digite o nome a ser deletado: ").lower()
+    namedeletado = input("Enter the name to be deleted: ").lower()
     agenda = open("agenda.txt", "r")
     aux = []
     aux2 = []
@@ -60,26 +60,26 @@ def deleteContact():
     for i in agenda:
         aux.append(i)
     for i in range(0, len(aux)):
-        if nomedeletado not in aux[i].lower():
+        if namedeletado not in aux[i].lower():
             aux2.append(aux[i])
     agenda = open("agenda.txt", "w")
     for i in aux2:
         agenda.write(i)
-    print(f'contato deletado com sucesso')
+    print(f'contact deleted successfully')
     listContact()
 
 
 def searchContactByname():
-    nome = input(f'digite o nome a ser procurado: ').upper()
+    name = input(f'type in the name to be searched for: ').upper()
     agenda = open("agenda.txt", "r")
-    for contato in agenda:
-        if nome in contato.split(";")[1].upper():
-            print(contato)
+    for contact in agenda:
+        if name in contact.split(";")[1].upper():
+            print(contact)
             agenda.close
 
 
-def sair():
-    print(f'Até mais... !')
+def exit():
+    print(f'See you later... !')
 
     exit()
 
